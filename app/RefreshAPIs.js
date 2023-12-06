@@ -10,6 +10,8 @@ function RefreshAPIs({ imageData }) {
   const handleRefreshClick = () => {
     if (imageData) {
       console.log('APIs refreshed with imageData:', imageData); // Example usage
+      
+
       const zoomAppsSdkApi = zoomSdk["setVirtualForeground"].bind(zoomSdk);
       zoomAppsSdkApi({imageData:imageData,})
         .then((clientResponse) => {
@@ -31,7 +33,7 @@ function RefreshAPIs({ imageData }) {
   };
 
   return (
-    <button style={{ backgroundColor: 'blue' }} onClick={handleRefreshClick}>Refresh APIs</button>
+    <button style={{ backgroundColor: 'blue' }} onClick={handleRefreshClick}>Change Nametag</button>
   );
 }
 

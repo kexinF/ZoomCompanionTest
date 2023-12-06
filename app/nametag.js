@@ -5,6 +5,7 @@ const NameTag = () => {
   const [inputValues, setInputValues] = useState(['', '', '']); // Three separate input values
   const [isToggled, setIsToggled] = useState(false);
   const [imageData, setImageData] = useState(null);
+  const [imageURL, setImageURL] = useState(null);
 
   // useEffect(() => {
   //   // Add any side effect code here if needed
@@ -41,7 +42,8 @@ const NameTag = () => {
         const dataURL = canvas.toDataURL('image/png');
 
         // Update the imageData state with the data URL
-        setImageData(dataURL);
+        setImageURL(dataURL);
+        setImageData(newImageData);
       } else {
         // Reset the imageData state
         setImageData(null);
@@ -87,7 +89,7 @@ const NameTag = () => {
       {imageData && (
         <div>
           <p>Image Data:</p>
-          <img src={imageData} alt="ImageData" />
+          <img src={imageURL} alt="ImageData" />
         </div>
       )}
       <RefreshAPIs imageData={imageData} />
