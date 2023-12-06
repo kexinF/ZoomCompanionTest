@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import zoomSdk from "@zoom/appssdk";
 import { apis, invokeZoomAppsSdk } from "./apis";
+import NameTag from "./nametag"
 
 export default function Home() {
   const [error, setError] = useState(null);
@@ -80,6 +81,9 @@ export default function Home() {
           !
         </h3>
       </div>
+
+      <NameTag />
+      
       <div className="flex flex-col items-center justify-center w-full  p-4">
         <div className="max-w-xs w-full overflow-auto">
           <div className="space-y-2">
