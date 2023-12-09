@@ -20,8 +20,6 @@ export default function Home() {
         capabilities: [
           "setVirtualBackground",
           "removeVirtualBackground",
-          // "setVideoFilter",
-          // "deleteVideoFilter",
           "setVirtualForeground",
           "removeVirtualForeground"
 

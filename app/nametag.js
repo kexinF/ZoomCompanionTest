@@ -1,5 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import RefreshAPIs from './RefreshAPIs';
+import zoomSdk from "@zoom/appssdk";
+
+
+const loadImage = (src) => {
+  return new Promise((resolve, reject) => {
+      const image = new Image();
+      image.src = src;
+      image.onload = () => {
+        resolve(image);
+      };
+      image.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
 
 const NameTag = () => {
   const [inputValues, setInputValues] = useState(['', '', '']); // Three separate input values
@@ -7,50 +23,53 @@ const NameTag = () => {
   const [imageData, setImageData] = useState(null);
   const [imageURL, setImageURL] = useState(null);
 
-  // useEffect(() => {
-  //   // Add any side effect code here if needed
-  // }, []);
-
   useEffect(() => {
     if (isToggled) {
-      // Create a canvas element
+
       const canvas = document.createElement('canvas');
       const context = canvas.getContext('2d');
 
-      // Set canvas size (adjust as needed)
-      canvas.width = 200; // Width of the canvas
-      canvas.height = 100; // Height of the canvas
+      canvas.width = 1600; // Width of the canvas
+      canvas.height = 900; // Height of the canvas
 
-      // Clear the canvas
       context.clearRect(0, 0, canvas.width, canvas.height);
 
       // Set font and text style (adjust as needed)
-      context.font = '20px Arial'; // Font size and style
+      context.font = '50px Arial'; // Font size and style
       context.fillStyle = 'black'; // Text color
 
       // Draw the three input values on separate lines
       inputValues.forEach((value, index) => {
-        context.fillText(value, 10, 30 + index * 20); // Adjust positions as needed
+        context.fillText(value, 300, 500 + index * 50); // Adjust positions as needed
       });
 
-      // Get the image data from the canvas
-      const newImageData = context.getImageData(0, 0, canvas.width, canvas.height);
 
-      // Check if the image data is empty or invalid
-      if (newImageData && newImageData.data.length > 0) {
-        // Convert image data to a data URL
-        const dataURL = canvas.toDataURL('image/png');
+      (async () => {
+        try {
+          const image = await loadImage('/badges/test.png');
+          context.drawImage(image, 272, 254, 400, 100);
+          const newImageData = context.getImageData(0, 0, canvas.width, canvas.height);
+          console.log(newImageData);
+          setImageData(newImageData);
 
-        // Update the imageData state with the data URL
-        setImageURL(dataURL);
-        setImageData(newImageData);
-      } else {
-        // Reset the imageData state
-        setImageData(null);
-      }
+          if (imageData && imageData.data.length > 0) {
+            const dataURL = canvas.toDataURL('image/png');
+            setImageURL(dataURL);
+          }
+
+        } catch (error) {
+          console.error('Error loading image:', error);
+        }
+      })();
+
     } else {
       // Reset the imageData state if not toggled
       setImageData(null);
+      setImageURL(null);
+
+      const zoomAppsSdkApi = zoomSdk["removeVirtualForeground"].bind(zoomSdk);
+      zoomAppsSdkApi()
+      
     }
   }, [isToggled, inputValues]);
 
