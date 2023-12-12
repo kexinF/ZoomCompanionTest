@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import zoomSdk from "@zoom/appssdk";
 import { apis, invokeZoomAppsSdk } from "./apis";
 import NameTag from "./nametag"
@@ -18,8 +18,6 @@ export default function Home() {
     try {
       const configResponse = await zoomSdk.config({
         capabilities: [
-          "setVirtualBackground",
-          "removeVirtualBackground",
           "setVirtualForeground",
           "removeVirtualForeground"
 
@@ -34,6 +32,7 @@ export default function Home() {
       const userContext = await zoomSdk.invoke("getUserContext");
       setUser(userContext);
     } catch (error) {
+      console.log('zoom sdk not loaded')
     }
   }
 
@@ -45,22 +44,6 @@ export default function Home() {
     return <div>Error: {error}</div>;
   }
 
-  const searchHandler = (e) => {
-    let lowerCase = e.target.value.toLowerCase();
-    setApiSearchText(lowerCase);
-  };
-
-  const filteredApis = apis?.filter((api) => {
-    if (apiSearchText === "") {
-      return api;
-    } else {
-      return api.name.toLowerCase().includes(apiSearchText);
-    }
-  });
-
-  const handleShowVideos = () => {
-    setShowVideos((prev) => !prev);
-  };
 
   return (
     <div className="bg-white w-screen h-screen">
@@ -85,7 +68,7 @@ export default function Home() {
       <div className="flex flex-col items-center justify-center w-full  p-4">
         <div className="max-w-xs w-full overflow-auto">
           <div className="space-y-2">
-            {filteredApis?.map((api) => (
+            {apis?.map((api) => (
               <button
                 onClick={invokeZoomAppsSdk(api)}
                 className="w-full bg-[#35377D] hover:bg-slate-900 text-white font-medium py-2 rounded-lg focus:outline-none focus:shadow-outline transform transition duration-150 ease-in-out"
@@ -95,12 +78,7 @@ export default function Home() {
                 {api.buttonName || api.name}
               </button>
             ))}
-            <button
-              onClick={handleShowVideos}
-              className="w-full bg-[#35377D] hover:bg-slate-900 text-white font-medium py-2 rounded-lg focus:outline-none focus:shadow-outline transform transition duration-150 ease-in-out"
-            >
-              Relaxation Exercises
-            </button>
+            
 
           </div>
         </div>

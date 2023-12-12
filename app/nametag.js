@@ -1,80 +1,74 @@
 import React, { useState, useEffect } from 'react';
 import RefreshAPIs from './RefreshAPIs';
+import { apis, invokeZoomAppsSdk } from "./apis";
 import zoomSdk from "@zoom/appssdk";
 
 
-const loadImage = (src) => {
-  return new Promise((resolve, reject) => {
-      const image = new Image();
-      image.src = src;
-      image.onload = () => {
-        resolve(image);
-      };
-      image.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
-
-
 const NameTag = () => {
-  const [inputValues, setInputValues] = useState(['', '', '']); // Three separate input values
-  const [isToggled, setIsToggled] = useState(false);
+  const [inputValues, setInputValues] = useState(['', '', '']);
+  const [showNametag, setShowNametag] = useState(true);
+  const [showHands, setShowHands] = useState(false);
   const [imageData, setImageData] = useState(null);
-  const [imageURL, setImageURL] = useState(null);
 
   useEffect(() => {
-    if (isToggled) {
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    canvas.width = 1600; // Width of the canvas
+    canvas.height = 900; // Height of the canvas
+    context.clearRect(0, 0, canvas.width, canvas.height);
 
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d');
+    if (showNametag) {
 
-      canvas.width = 1600; // Width of the canvas
-      canvas.height = 900; // Height of the canvas
+      context.fillStyle = 'white'; // Set the background color to white
+      // context.roundRect(x, y, width, height, radii);
+      context.roundRect(780, 550, 505, 170, 20);
 
-      context.clearRect(0, 0, canvas.width, canvas.height);
+      // Fill the rounded rectangle
+      context.fill();
 
+      context.strokeStyle = '#FFD700'; // This is a gold-like color, often associated with the term "Asian yellow"
+
+      // Set the line width
+      context.lineWidth = 9;
+
+      // Draw the line
+      context.beginPath();
+      context.moveTo(790, 570); // Starting point of the line
+      context.lineTo(790, 710); // Ending point of the line
+      context.stroke(); // Apply the stroke
+
+      // Draw the three input values on separate lines
+      inputValues.forEach((value, index) => {
+        context.font = '40px Arial'
+        context.fillStyle = 'black'; // Text color
+        const textWidth = context.measureText(value).width;
+        context.fillText(value, 800 , 600 + index * 50); // Adjust positions as needed
+        console.log(textWidth, value)
+      });
+    }
+    
+    if (showHands) {
       // Set font and text style (adjust as needed)
       context.font = '50px Arial'; // Font size and style
       context.fillStyle = 'black'; // Text color
 
       // Draw the three input values on separate lines
       inputValues.forEach((value, index) => {
-        context.fillText(value, 300, 500 + index * 50); // Adjust positions as needed
+        context.fillText(value, 0, 500 + index * 50);
       });
-
-
-      (async () => {
-        try {
-          const image = await loadImage('/badges/test.png');
-          context.drawImage(image, 272, 254, 400, 100);
-          const newImageData = context.getImageData(0, 0, canvas.width, canvas.height);
-          console.log(newImageData);
-          setImageData(newImageData);
-
-          if (imageData && imageData.data.length > 0) {
-            const dataURL = canvas.toDataURL('image/png');
-            setImageURL(dataURL);
-          }
-
-        } catch (error) {
-          console.error('Error loading image:', error);
-        }
-      })();
-
-    } else {
-      // Reset the imageData state if not toggled
-      setImageData(null);
-      setImageURL(null);
-
-      const zoomAppsSdkApi = zoomSdk["removeVirtualForeground"].bind(zoomSdk);
-      zoomAppsSdkApi()
-      
     }
-  }, [isToggled, inputValues]);
+    const newImageData = context.getImageData(0, 0, canvas.width, canvas.height);
+    // console.log(newImageData);
+    setImageData(newImageData);
 
-  const handleToggle = () => {
-    setIsToggled(!isToggled);
+  }, [showNametag, showHands, inputValues]);
+
+  const handleNametag = () => {
+    setShowNametag(!showNametag);
+  };
+
+  const handleHands = () => {
+    setShowHands(!showHands);
   };
 
   const handleInputChange = (index, value) => {
@@ -83,7 +77,7 @@ const NameTag = () => {
     setInputValues(newInputValues);
   };
 
-  return (
+ return (
     <div>
       <div className="flex w-full justify-between">
         {inputValues.map((value, index) => (
@@ -97,24 +91,31 @@ const NameTag = () => {
           />
         ))}
       </div>
-      <label className="switch">
+
+      <div>
+        Show Nametag:
         <input
           type="checkbox"
-          checked={isToggled}
-          onChange={handleToggle}
+          checked={showNametag}
+          onChange={handleNametag}
         />
-        <span className="slider"></span>
-      </label>
-      {imageData && (
-        <div>
-          <p>Image Data:</p>
-          <img src={imageURL} alt="ImageData" />
-        </div>
-      )}
+      </div>
+
+      <div>
+        Show Hands:
+        <input
+          type="checkbox"
+          checked={showHands}
+          onChange={handleHands}
+        />
+      </div>
+
+
       <RefreshAPIs imageData={imageData} />
 
     </div>
   );
 };
+
 
 export default NameTag;
