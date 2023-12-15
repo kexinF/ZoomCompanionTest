@@ -83,6 +83,28 @@ export default function Home() {
           </div>
         </div>
       </div>
+    
+
+    <footer className="footer">
+      <div className="footer-section">
+        <a href="/affirmation" className="footer-link">
+          <span class="icon-container">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,1A11,11,0,1,0,23,12,11.013,11.013,0,0,0,12,1Zm0,20a9,9,0,1,1,9-9A9.011,9.011,0,0,1,12,21Zm6-8A6,6,0,0,1,6,13a1,1,0,0,1,2,0,4,4,0,0,0,8,0,1,1,0,0,1,2,0ZM8,10V9a1,1,0,0,1,2,0v1a1,1,0,0,1-2,0Zm6,0V9a1,1,0,0,1,2,0v1a1,1,0,0,1-2,0Z"/></svg>
+          </span>
+          Affirmation
+        </a>
+      </div>
+      <div className="footer-section">
+        <a href="/name-tag" className="footer-link">Name Tag</a>
+      </div>
+      <div className="footer-section">
+        <a href="/mindfulness" className="footer-link">Mindfulness</a>
+      </div>
+      <div className="footer-section">
+        <a href="/wave-hands" className="footer-link">Wave Hands</a>
+      </div>
+    </footer>
+
     </div>
   );
 }

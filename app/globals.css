@@ -25,3 +25,56 @@ body {
     )
     rgb(var(--background-start-rgb));
 } */
+
+
+.footer {
+  display: flex;
+  justify-content: space-around;
+  padding: 0px;
+  background: #f8f9fa;
+}
+
+.footer-section {
+  flex: 1; /* This will make each section flexible and divide the space equally */
+  display: flex; /* Use flexbox to center the link inside the section */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  padding: 0px; /* You can adjust the padding to control the spacing inside the sections */
+}
+
+.footer-link {
+  display: block;
+  width: 100%; /* Take the full width */
+  height: 100%; /* Take the full height */
+  background-color: transparent;
+  text-decoration: none;
+  color: #000;
+  font-weight: bold;
+  text-align: center; /* Ensure the text is centered */
+  padding: 20px 20px; /* Add padding to the top and bottom if needed */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  transition: color 0.1s;
+}
+
+.icon-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.footer-link svg {
+  width: 3em;
+  height: 3em;
+}
+
+.footer-link:hover {
+  color: #d68071; /* Replace with the color you want on hover */
+  background-color: #e9ecef; /* Optional: if you want to keep the background change on hover */
+
+}
+
+.footer-link:hover svg {
+  fill: #d68071; /* Change to your desired hover color */
+}
