@@ -1,5 +1,24 @@
 /* globals zoomSdk */
 
+let width = 100;
+let height = 100;
+let imageData = new ImageData(width, height);
+
+// Function to generate a random integer between 0 and 255
+function randomColorValue() {
+  return Math.floor(Math.random() * 256);
+}
+
+// Iterate over each pixel and set a random color
+for (let i = 0; i < imageData.data.length; i += 4) {
+  imageData.data[i] = randomColorValue(); // Red
+  imageData.data[i + 1] = randomColorValue(); // Green
+  imageData.data[i + 2] = randomColorValue(); // Blue
+  imageData.data[i + 3] = 255; // Alpha (fully opaque)
+}
+
+
+
 const invokeZoomAppsSdk = (api) => () => {
     const { name, buttonName = "", options = null } = api;
     const zoomAppsSdkApi = zoomSdk[name].bind(zoomSdk);
@@ -19,17 +38,6 @@ const invokeZoomAppsSdk = (api) => () => {
         });
 };
 
-const sortListByName = (curr, next) => {
-    const currName = curr.name.toLowerCase();
-    const nextName = next.name.toLowerCase();
-    if (currName < nextName) {
-        return -1;
-    }
-    if (currName > nextName) {
-        return 1;
-    }
-    return 0;
-};
 
 const apis = [
     {
@@ -68,105 +76,19 @@ const apis = [
         name: "removeVirtualBackground",
         buttonName: "Remove PWS Badge",
     },
-    // {
-    //     name: "getSupportedJsApis",
-    // },
-    // {
-    //     name: "openUrl",
-    //     options: { url: "https://www.google2.com/" },
-    // },
-    // {
-    //     name: "getMeetingContext",
-    // },
-    // {
-    //     name: "getRunningContext",
-    // },
-    // {
-    //     name: "showNotification",
-    //     options: {
-    //         type: "info",
-    //         title: "Hello Zoom Apps",
-    //         message: "Testing notification",
-    //     },
-    // },
-    // {
-    //     name: "sendAppInvitationToAllParticipants",
-    // },
-    // {
-    //     name: "sendAppInvitationToMeetingOwner",
-    // },
-    // {
-    //     name: "showAppInvitationDialog",
-    // },
-    // {
-    //     name: "getMeetingParticipants",
-    // },
-    // {
-    //     name: "getMeetingUUID",
-    // },
-    // {
-    //     name: "getMeetingJoinUrl",
-    // },
-    // {
-    //     name: "listCameras",
-    // },
-    // {
-    //     name: "expandApp",
-    // },
-    // {
-    //     name: "allowParticipantToRecord",
-    // },
-    // {
-    //     name: "getRecordingContext",
-    // },
-    // {
-    //     buttonName: "cloudRecording (start)",
-    //     name: "cloudRecording",
-    //     options: { action: "start" },
-    // },
-    // {
-    //     buttonName: "cloudRecording (stop)",
-    //     name: "cloudRecording",
-    //     options: { action: "stop" },
-    // },
-    // {
-    //     buttonName: "cloudRecording (pause)",
-    //     name: "cloudRecording",
-    //     options: { action: "pause" },
-    // },
-    // {
-    //     buttonName: "cloudRecording (resume)",
-    //     name: "cloudRecording",
-    //     options: { action: "resume" },
-    // },
-    // {
-    //     buttonName: "setVideoMirrorEffect (true)",
-    //     name: "setVideoMirrorEffect",
-    //     options: {
-    //         mirrorMyVideo: true,
-    //     },
-    // },
-    // {
-    //     buttonName: "setVideoMirrorEffect (false)",
-    //     name: "setVideoMirrorEffect",
-    //     options: {
-    //         mirrorMyVideo: false,
-    //     },
-    // },
-    // {
-    //     buttonName: "shareApp (start)",
-    //     name: "shareApp",
-    //     options: {
-    //         action: "start",
-    //     },
-    // },
-    // {
-    //     buttonName: "shareApp (stop)",
-    //     name: "shareApp",
-    //     options: {
-    //         action: "stop",
-    //     },
-    // },
+    {
+        name: "setVirtualForeground",
+        buttonName: "Set PWS Badge Using Virtual Foreground",
+        options: {
+            imageData:
+                imageData,
+        },
+    },
+    {
+        name: "removeVirtualForeground",
+        buttonName: "Remove PWS Badge Using Virtual Foreground",
+    },
+ 
 ];
 
 module.exports = { apis, invokeZoomAppsSdk };
