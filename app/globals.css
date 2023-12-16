@@ -32,6 +32,7 @@ body {
   justify-content: space-around;
   padding: 0px;
   background: #f8f9fa;
+  width: 100%;
 }
 
 .footer-section {
@@ -77,4 +78,45 @@ body {
 
 .footer-link:hover svg {
   fill: #d68071; /* Change to your desired hover color */
+}
+
+.self-confirm {
+  color: #ffffff; /* White text, change if needed */
+  padding: 10px 0; /* 10px vertical padding, no horizontal padding */
+  text-align: center;
+  font-size: 24px;
+  border-radius: 10px; /* Adjust as needed */
+  width: 100%; /* Full width */
+  background: linear-gradient(#98b8cd, #cbb3e5); /* Example gradient colors */
+}
+
+.header {
+  width: 100%;
+}
+
+.button-rows {
+  display: inline-block;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.wave-hand-button {
+  padding: 10px 20px;
+  background-color: transparent;
+  color: black;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  cursor: pointer;
+  margin: 5px;
+  font-size: 20px;
+}
+
+.wave-hand-button:hover {
+  background-color: #f0f0f0;
+}
+
+.wave-hand-button.selected {
+  background-color: #d68071;
+  color: white;
+  font-weight: bold;
 }
