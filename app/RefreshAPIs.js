@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import zoomSdk from "@zoom/appssdk";
-import invokeZoomAppsSdk from "./apis";
 
 function RefreshAPIs({ imageData }) {
   const [display, setDisplay] = useState(true); 

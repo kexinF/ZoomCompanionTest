@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import RefreshAPIs from './RefreshAPIs';
-import { apis, invokeZoomAppsSdk } from "./apis";
 import zoomSdk from "@zoom/appssdk";
 
 
@@ -9,6 +8,7 @@ const NameTag = () => {
   const [showNametag, setShowNametag] = useState(true);
   const [showHands, setShowHands] = useState(false);
   const [imageData, setImageData] = useState(null);
+  const [selectedPronoun, setSelectedPronoun] = useState('');
 
   useEffect(() => {
     const canvas = document.createElement('canvas');
@@ -77,29 +77,76 @@ const NameTag = () => {
     setInputValues(newInputValues);
   };
 
+   const handlePronounChange = (e) => {
+    setSelectedPronoun(e.target.value);
+  };
+
+
+  const blockStyle = {
+    height: '20px', // Adjust the height value to control the spacing
+  };
+
  return (
     <div>
-      <div className="flex w-full justify-between">
-        {inputValues.map((value, index) => (
-          <input
-            key={index}
-            type="text"
-            placeholder={`Enter text ${index + 1}`}
-            className="border border-gray-300 rounded-lg p-2 w-1/3"
-            value={value}
-            onChange={(e) => handleInputChange(index, e.target.value)}
-          />
-        ))}
-      </div>
 
-      <div>
-        Show Nametag:
-        <input
-          type="checkbox"
-          checked={showNametag}
-          onChange={handleNametag}
-        />
-      </div>
+        <div>
+          <label>Full Name </label>
+          <input
+            type="text"
+            className="border border-gray-300 rounded-lg p-2 w-1/3"
+            value={inputValues[0]}
+            onChange={(e) => handleInputChange(0, e.target.value)}
+          />
+        </div>
+        <div style={blockStyle}></div>
+
+        <div>
+          <label>Preferred Name </label>
+          <input
+            type="text"
+            className="border border-gray-300 rounded-lg p-2 w-1/3"
+            value={inputValues[1]}
+            onChange={(e) => handleInputChange(1, e.target.value)}
+          />
+        </div>
+        <div style={blockStyle}></div>
+
+        <div>
+          <label>Select Pronouns</label>
+          <select
+            value={selectedPronoun}
+            onChange={handlePronounChange}
+            className="border border-gray-300 rounded-lg p-2 w-1/3"
+          >
+            <option value="">Select Pronouns</option>
+            <option value="he/him">He/Him</option>
+            <option value="she/her">She/Her</option>
+            <option value="they/them">They/Them</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div style={blockStyle}></div>
+
+
+        <div>
+          <label>Self Disclosure </label>
+          <input
+            type="text"
+            className="border border-gray-300 rounded-lg p-2 w-1/3"
+            value={inputValues[2]}
+            onChange={(e) => handleInputChange(2, e.target.value)}
+          />
+        </div>
+        <div style={blockStyle}></div>
+
+        <div>
+          Show Nametag:
+          <input
+            type="checkbox"
+            checked={showNametag}
+            onChange={handleNametag}
+          />
+        </div>
 
       <div>
         Show Hands:

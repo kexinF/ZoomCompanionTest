@@ -26,6 +26,10 @@ body {
     rgb(var(--background-start-rgb));
 } */
 
+label,input{
+  display:flex;
+  flex-direction:column;
+}
 
 .footer {
   display: flex;

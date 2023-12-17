@@ -1,8 +1,8 @@
-"use client"
-
 import React, { useState } from 'react';
 
-const Header = ({ title }) => {
+const Header = () => {
+
+  const header_title = localStorage.getItem('title') || 'The session default title';
 
   const [selectedButton, setSelectedButton] = useState(null);
 
@@ -24,7 +24,7 @@ const Header = ({ title }) => {
   return (
     <div className="header">
       <div className="self-confirm">
-        <h1>{'I have an important voice!'}</h1>
+          <h1>{header_title}</h1>
       </div>
 
       <div className="button-rows">
