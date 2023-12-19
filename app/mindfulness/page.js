@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../header';
 import Footer from '../footer';
 import Modal from 'react-modal';
@@ -8,11 +8,25 @@ function Home() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentEditId, setCurrentEditId] = useState(null);
   const [editText, setEditText] = useState('');
-  const [newButtonText, setNewButtonText] = useState('');
-  const [buttons, setButtons] = useState([
-    { id: 1, text: 'I have an important voice!' },
-    { id: 2, text: 'Me Too!' },
-  ]);
+  const initialButtons = [
+      { id: 1, text: 'Say what I want to say, whatever happens will help me grow' },
+      { id: 2, text: 'I can take up space' },
+      { id: 3, text: 'I have an important voice' },
+      { id: 4, text: 'Feel the tension and proceed' },
+      { id: 5, text: 'I have the right to stutter' },
+    ];
+
+  // Initialize state with data from localStorage if it exists, otherwise use the initial data.
+  const [buttons, setButtons] = useState(() => {
+    const localStorageData = localStorage.getItem('buttons');
+    return localStorageData ? JSON.parse(localStorageData) : initialButtons;
+  });
+
+
+  useEffect(() => {
+    localStorage.setItem('buttons', JSON.stringify(buttons));
+  }, [buttons]);
+
 
   const openModal = (button) => {
     setModalIsOpen(true);
@@ -30,6 +44,7 @@ function Home() {
         button.id === currentEditId ? { ...button, text: editText } : button
       )
     );
+    console.log(buttons)
     closeModal();
   };
 
@@ -39,15 +54,14 @@ function Home() {
 
   const addButton = () => {
     const newId = Math.max(0, ...buttons.map((b) => b.id)) + 1; // Create a new ID
-    const newButton = { id: newId, text: newButtonText };
+    const newButton = { id: newId, text: '' };
     setButtons((prevButtons) => [...prevButtons, newButton]);
-    setNewButtonText(''); // Reset input field
+    setModalIsOpen(true);
+    setCurrentEditId(newId);
   };
 
-  const handleTitleChange = () => {
-    const currentTime = new Date();
-    const formattedTime = currentTime.toLocaleTimeString();
-    localStorage.setItem('title', formattedTime);
+  const handleTitleChange = (text) => {
+    localStorage.setItem('title', text);
     window.location.reload();
   };
 
@@ -57,13 +71,27 @@ function Home() {
         <Header />
       </div>
 
-      <button onClick={handleTitleChange}>Change Title to Current Time</button>
+     <div>
+      <h2 style={{ fontSize: '30px', fontWeight: 'bold', display: 'inline-block' }}>Affirmation</h2>
+      <button style={{ border: 'none', display: 'inline-block', fontSize: '24px', padding: '10px'}} onClick={addButton}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="10%"
+          height="10%"
+          viewBox="0 0 100 100"
+        >
+          <circle cx="50" cy="50" r="48" fill="#f7f3f3" stroke="none" />
+          <line x1="30" y1="50" x2="70" y2="50" stroke="#d68071" stroke-width="8" /> 
+          <line x1="50" y1="30" x2="50" y2="70" stroke="#d68071" stroke-width="8" />
+        </svg>
+  </button>
+    </div>
 
       {buttons.map((button) => (
         <div key={button.id} className="dropdown">
           <button className="dots-button"> {button.text}</button>
           <div className="dropdown-content">
-            <button style={{ border: '0.5px solid black' }} onClick={() => {}}>Apply</button>
+            <button style={{ border: '0.5px solid black' }} onClick={() => handleTitleChange(button.text)}>Apply</button>
             <button style={{ border: '0.5px solid black' }} onClick={() => openModal(button)}>Edit</button>
             <button style={{ border: '0.5px solid black' }} onClick={() => deleteButton(button.id)}>Delete</button>
           </div>

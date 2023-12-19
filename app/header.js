@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const Header = () => {
 
-  const header_title = localStorage.getItem('title') || 'The session default title';
+  const header_title = localStorage.getItem('title') || 'Say what I want to say, whatever happens will help me grow';
 
   const [selectedButton, setSelectedButton] = useState(null);
 
