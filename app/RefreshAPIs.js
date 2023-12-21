@@ -8,7 +8,7 @@ function RefreshAPIs({ imageData }) {
   const [isDisabled, setIsDisabled] = useState(true);
 
   useEffect(() => {
-    // Disable the code for 3 seconds
+    // Disable the code for 0.01 seconds
     setTimeout(() => {
       setIsDisabled(false);
     }, 100);

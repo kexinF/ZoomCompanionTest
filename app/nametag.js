@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import RefreshAPIs from './RefreshAPIs';
 import zoomSdk from "@zoom/appssdk";
-
+import Switch from '@mui/material/Switch';
+import { alpha, styled } from '@mui/material/styles';
 
 const NameTag = () => {
-  const [inputValues, setInputValues] = useState(['', '', '']);
+  const [inputValues, setInputValues] = useState(['', '', '', '']);
   const [showNametag, setShowNametag] = useState(true);
   const [showHands, setShowHands] = useState(false);
   const [imageData, setImageData] = useState(null);
@@ -20,7 +21,6 @@ const NameTag = () => {
     if (showNametag) {
 
       context.fillStyle = 'white'; // Set the background color to white
-      // context.roundRect(x, y, width, height, radii);
       context.roundRect(780, 550, 505, 170, 20);
 
       // Fill the rounded rectangle
@@ -43,22 +43,24 @@ const NameTag = () => {
         context.fillStyle = 'black'; // Text color
         const textWidth = context.measureText(value).width;
         context.fillText(value, 800 , 600 + index * 50); // Adjust positions as needed
-        console.log(textWidth, value)
+        // console.log(textWidth, value)
       });
     }
     
-    if (showHands) {
-      // Set font and text style (adjust as needed)
+    const indexData = JSON.parse(localStorage.getItem('selectedWaveHand'));
+    if (indexData !== null) {
       context.font = '50px Arial'; // Font size and style
       context.fillStyle = 'black'; // Text color
 
-      // Draw the three input values on separate lines
-      inputValues.forEach((value, index) => {
-        context.fillText(value, 0, 500 + index * 50);
-      });
+      const waveHandsData = JSON.parse(localStorage.getItem('waveHands'));
+      const indexData = JSON.parse(localStorage.getItem('selectedWaveHand'));
+      const out = waveHandsData[indexData]; // Access the selected value
+      console.log(out);
+
+      context.fillText(out, 0, 500);
+
     }
     const newImageData = context.getImageData(0, 0, canvas.width, canvas.height);
-    // console.log(newImageData);
     setImageData(newImageData);
 
   }, [showNametag, showHands, inputValues]);
@@ -75,20 +77,34 @@ const NameTag = () => {
     const newInputValues = [...inputValues];
     newInputValues[index] = value;
     setInputValues(newInputValues);
-  };
-
-   const handlePronounChange = (e) => {
-    setSelectedPronoun(e.target.value);
-  };
-
+    console.log(inputValues)
+  }
 
   const blockStyle = {
     height: '20px', // Adjust the height value to control the spacing
   };
 
+  const ColoredSwitch = styled(Switch)(({ theme }) => ({
+  '& .MuiSwitch-switchBase.Mui-checked': {
+    color: '#d68071', // Set the color using a hex value
+    '&:hover': {
+      backgroundColor: alpha('#d68071', theme.palette.action.hoverOpacity), // Set the hover color using a hex value
+    },
+  },
+  '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+    backgroundColor: '#d68071', // Set the track color using a hex value
+  },
+}));
+
  return (
     <div>
-
+        <div>
+          <h2 style={{ fontSize: '30px', fontWeight: 'bold', display: 'inline-block' }}>Name Tag</h2>
+          <ColoredSwitch 
+            checked={showNametag}
+            onChange={handleNametag}
+          />
+        </div>
         <div>
           <label>Full Name </label>
           <input
@@ -115,7 +131,7 @@ const NameTag = () => {
           <label>Select Pronouns</label>
           <select
             value={selectedPronoun}
-            onChange={handlePronounChange}
+            onChange={(e) => handleInputChange(2, e.target.value)}
             className="border border-gray-300 rounded-lg p-2 w-1/3"
           >
             <option value="">Select Pronouns</option>
@@ -133,20 +149,11 @@ const NameTag = () => {
           <input
             type="text"
             className="border border-gray-300 rounded-lg p-2 w-1/3"
-            value={inputValues[2]}
-            onChange={(e) => handleInputChange(2, e.target.value)}
+            value={inputValues[3]}
+            onChange={(e) => handleInputChange(3, e.target.value)}
           />
         </div>
         <div style={blockStyle}></div>
-
-        <div>
-          Show Nametag:
-          <input
-            type="checkbox"
-            checked={showNametag}
-            onChange={handleNametag}
-          />
-        </div>
 
       <div>
         Show Hands:

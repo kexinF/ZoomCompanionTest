@@ -1,17 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Header = () => {
 
   const header_title = localStorage.getItem('title') || 'Say what I want to say, whatever happens will help me grow';
 
-  const [selectedButton, setSelectedButton] = useState(null);
-
-  const handleButtonClick = (index) => {
-    console.log(index)
-    setSelectedButton(index);
-  };
-
-  const buttons = [
+  const initialWaveHands = [
     '👋',
     '👋 I\'m not done',
     '👋 Question',
@@ -19,6 +12,34 @@ const Header = () => {
     '👋 Different Opinion',
     '👋 Support',
   ];
+
+  const [waveHands, setWaveHands] = useState(() => {
+    const localStorageData = localStorage.getItem('waveHands');
+    return localStorageData ? JSON.parse(localStorageData) : initialWaveHands;
+  });
+
+  const [selectedWaveHand, setSelectedWaveHand] = useState(() => {
+    const localStorageData = localStorage.getItem('selectedWaveHand');
+    return localStorageData ? JSON.parse(localStorageData) : null;
+  });
+
+  const handleWaveHandsClick = (index) => {
+    if (index === selectedWaveHand) {
+      setSelectedWaveHand(null);
+    }
+    else {
+      setSelectedWaveHand(index);
+    }
+  };
+
+
+  useEffect(() => {
+    localStorage.setItem('waveHands', JSON.stringify(waveHands));
+  }, [waveHands]);
+
+  useEffect(() => {
+    localStorage.setItem('selectedWaveHand', selectedWaveHand);
+  }, [selectedWaveHand]);
 
 
   return (
@@ -28,15 +49,15 @@ const Header = () => {
       </div>
 
       <div className="button-rows">
-          {buttons.map((button, index) => (
+          {waveHands.map((waveHand, index) => (
             <button
               key={index}
               className={`wave-hand-button ${
-                selectedButton === index ? 'selected' : ''
+                selectedWaveHand === index ? 'selected' : ''
               }`}
-              onClick={() => handleButtonClick(index)}
+              onClick={() => handleWaveHandsClick(index)}
             >
-              {button}
+              {waveHand}
             </button>
           ))}
       </div>
