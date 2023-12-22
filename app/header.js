@@ -1,9 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
+import { affirmations, hands } from './state';
 
 const Header = () => {
 
-  const header_title = localStorage.getItem('title') || 'Say what I want to say, whatever happens will help me grow';
+  const header_title = affirmations.getCurrentAffirmation()
+    || 'Say what I want to say, whatever happens will help me grow';
 
   const initialWaveHands = [
     '👋',
@@ -15,12 +17,12 @@ const Header = () => {
   ];
 
   const [waveHands, setWaveHands] = useState(() => {
-    const localStorageData = localStorage.getItem('waveHands');
+    const localStorageData = hands.getHandChoicesAsString();
     return localStorageData ? JSON.parse(localStorageData) : initialWaveHands;
   });
 
   const [selectedWaveHand, setSelectedWaveHand] = useState(() => {
-    const localStorageData = localStorage.getItem('selectedWaveHand');
+    const localStorageData = hands.getCurrentHand();
     return localStorageData ? JSON.parse(localStorageData) : null;
   });
 

@@ -4,6 +4,7 @@ import Header from '../header';
 import Footer from '../footer';
 import NameTag from '../nametag';
 import Modal from 'react-modal';
+import {affirmations} from '../state';
 
 function Home() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -17,15 +18,15 @@ function Home() {
       { id: 5, text: 'I have the right to stutter' },
     ];
 
-  // Initialize state with data from localStorage if it exists, otherwise use the initial data.
+  // Initialize state with saved data if it exists, otherwise use the initial data.
   const [buttons, setButtons] = useState(() => {
-    const localStorageData = localStorage.getItem('buttons');
-    return localStorageData ? JSON.parse(localStorageData) : initialButtons;
+    const stringifiedAffirmations = affirmations.getAffirmationsAsString();
+    return stringifiedAffirmations ? JSON.parse(stringifiedAffirmations) : initialButtons;
   });
 
 
   useEffect(() => {
-    localStorage.setItem('buttons', JSON.stringify(buttons));
+    affirmations.setAffirmationsAsString(JSON.stringify(buttons));
   }, [buttons]);
 
 
@@ -61,8 +62,8 @@ function Home() {
     setCurrentEditId(newId);
   };
 
-  const handleTitleChange = (text) => {
-    localStorage.setItem('title', text);
+  const setAffirmation = (text) => {
+    affirmations.setCurrentAffirmation(text);
     window.location.reload();
   };
 
@@ -92,7 +93,7 @@ function Home() {
         <div key={button.id} className="dropdown">
           <button className="dots-button"> {button.text}</button>
           <div className="dropdown-content">
-            <button style={{ border: '0.5px solid black' }} onClick={() => handleTitleChange(button.text)}>Apply</button>
+            <button style={{ border: '0.5px solid black' }} onClick={() => setAffirmation(button.text)}>Apply</button>
             <button style={{ border: '0.5px solid black' }} onClick={() => openModal(button)}>Edit</button>
             <button style={{ border: '0.5px solid black' }} onClick={() => deleteButton(button.id)}>Delete</button>
           </div>

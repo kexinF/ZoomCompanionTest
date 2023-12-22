@@ -3,18 +3,19 @@ import RefreshAPIs from './RefreshAPIs';
 import zoomSdk from "@zoom/appssdk";
 import Switch from '@mui/material/Switch';
 import { alpha, styled } from '@mui/material/styles';
+import { hands } from './state';
 
 
 const NameTag = () => {
   const [inputValues, setInputValues] = useState(['', '', '', '']);
   const [showNametag, setShowNametag] = useState(false);
-  const [showHands, setShowHands] = useState(localStorage.getItem('selectedWaveHand'));
+  const [showHands, setShowHands] = useState(hands.getCurrentHand());
   const [imageData, setImageData] = useState(null);
   const [selectedPronoun, setSelectedPronoun] = useState('');
 
   useEffect(() => {
     const handleStorageChange = () => {
-      setShowHands(localStorage.getItem('selectedWaveHand'));
+      setShowHands(hands.getCurrentHand());
     };
 
     window.addEventListener('storage', handleStorageChange);
