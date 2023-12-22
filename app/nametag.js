@@ -4,14 +4,28 @@ import zoomSdk from "@zoom/appssdk";
 import Switch from '@mui/material/Switch';
 import { alpha, styled } from '@mui/material/styles';
 
+
 const NameTag = () => {
   const [inputValues, setInputValues] = useState(['', '', '', '']);
-  const [showNametag, setShowNametag] = useState(true);
-  const [showHands, setShowHands] = useState(false);
+  const [showNametag, setShowNametag] = useState(false);
+  const [showHands, setShowHands] = useState(localStorage.getItem('selectedWaveHand'));
   const [imageData, setImageData] = useState(null);
   const [selectedPronoun, setSelectedPronoun] = useState('');
 
   useEffect(() => {
+    const handleStorageChange = () => {
+      setShowHands(localStorage.getItem('selectedWaveHand'));
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
+  useEffect(() => {
+
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
     canvas.width = 1600; // Width of the canvas
@@ -22,8 +36,6 @@ const NameTag = () => {
 
       context.fillStyle = 'white'; // Set the background color to white
       context.roundRect(780, 550, 505, 170, 20);
-
-      // Fill the rounded rectangle
       context.fill();
 
       context.strokeStyle = '#FFD700'; // This is a gold-like color, often associated with the term "Asian yellow"
@@ -37,40 +49,52 @@ const NameTag = () => {
       context.lineTo(790, 710); // Ending point of the line
       context.stroke(); // Apply the stroke
 
-      // Draw the three input values on separate lines
-      inputValues.forEach((value, index) => {
-        context.font = '40px Arial'
-        context.fillStyle = 'black'; // Text color
-        const textWidth = context.measureText(value).width;
-        context.fillText(value, 800 , 600 + index * 50); // Adjust positions as needed
-        // console.log(textWidth, value)
-      });
+      context.font = '40px Arial';
+      context.fillStyle = 'black';
+      if (inputValues[1] != '') {
+        context.fillText(inputValues[0] + ' (' + inputValues[1] + ')', 800 , 600 + 0 * 50);
+      } else {
+        context.fillText(inputValues[0], 800 , 600 + 0 * 50);
+      }
+      context.font = '30px Arial';
+      context.fillText(inputValues[2], 800 , 600 + 1 * 50);
+
+      context.font = '40px Arial';
+      context.fillText(inputValues[3], 800 , 600 + 2 * 50);
     }
-    
+
+    const waveHandsData = JSON.parse(localStorage.getItem('waveHands'));
     const indexData = JSON.parse(localStorage.getItem('selectedWaveHand'));
     if (indexData !== null) {
       context.font = '50px Arial'; // Font size and style
       context.fillStyle = 'black'; // Text color
 
-      const waveHandsData = JSON.parse(localStorage.getItem('waveHands'));
-      const indexData = JSON.parse(localStorage.getItem('selectedWaveHand'));
       const out = waveHandsData[indexData]; // Access the selected value
-      console.log(out);
 
-      context.fillText(out, 0, 500);
+
+      const textLength = out.length;
+      context.fillStyle = '#d68071'; // Set the background color to white
+      context.roundRect(60, 70, textLength*15+80, 100, 30);
+      context.fill();
+      context.fillStyle = 'white'; // White text color
+
+      context.font = 'bold 80px Arial'; // Larger font size
+      context.fillText(out.substring(0, 3), 70, 150); // Draw the first character
+      context.font = 'bold 30px Arial';
+      context.fillText(out.substring(3), 160, 130);
 
     }
+
     const newImageData = context.getImageData(0, 0, canvas.width, canvas.height);
     setImageData(newImageData);
 
+
   }, [showNametag, showHands, inputValues]);
+
+
 
   const handleNametag = () => {
     setShowNametag(!showNametag);
-  };
-
-  const handleHands = () => {
-    setShowHands(!showHands);
   };
 
   const handleInputChange = (index, value) => {
@@ -97,7 +121,7 @@ const NameTag = () => {
 }));
 
  return (
-    <div>
+    <div style = {{marginLeft: '20px', marginRight: '20px'}}>
         <div>
           <h2 style={{ fontSize: '30px', fontWeight: 'bold', display: 'inline-block' }}>Name Tag</h2>
           <ColoredSwitch 
@@ -154,15 +178,6 @@ const NameTag = () => {
           />
         </div>
         <div style={blockStyle}></div>
-
-      <div>
-        Show Hands:
-        <input
-          type="checkbox"
-          checked={showHands}
-          onChange={handleHands}
-        />
-      </div>
 
 
       <RefreshAPIs imageData={imageData} />

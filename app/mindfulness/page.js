@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../header';
 import Footer from '../footer';
+import NameTag from '../nametag';
 import Modal from 'react-modal';
 
 function Home() {
@@ -71,9 +72,9 @@ function Home() {
         <Header />
       </div>
 
-     <div>
+     <div style = {{marginLeft: '20px', marginRight: '20px'}}>
       <h2 style={{ fontSize: '30px', fontWeight: 'bold', display: 'inline-block' }}>Affirmation</h2>
-      <button style={{ border: 'none', display: 'inline-block', fontSize: '24px', padding: '10px'}} onClick={addButton}>
+      <button style={{ border: 'none', display: 'inline-block', fontSize: '24px', padding: '10px',}} onClick={addButton}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="10%"
@@ -84,7 +85,7 @@ function Home() {
           <line x1="30" y1="50" x2="70" y2="50" stroke="#d68071" stroke-width="8" /> 
           <line x1="50" y1="30" x2="50" y2="70" stroke="#d68071" stroke-width="8" />
         </svg>
-  </button>
+      </button>
     </div>
 
       {buttons.map((button) => (
