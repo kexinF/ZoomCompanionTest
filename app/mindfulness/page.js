@@ -1,10 +1,9 @@
-"use client";
 import React, { useState, useEffect } from 'react';
 import Header from '../header';
 import Footer from '../footer';
 import NameTag from '../nametag';
 import Modal from 'react-modal';
-import {affirmations} from '../state';
+import { affirmations } from '../state';
 
 function Home() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
