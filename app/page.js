@@ -7,6 +7,7 @@ import zoomSdk from "@zoom/appssdk";
 import NameTag from "./nametag"
 import Header from './header';
 import Footer from './footer';
+import { affirmations, hands } from './state';
 
 
 export default function Home() {
@@ -30,12 +31,17 @@ export default function Home() {
     configureSdk();
   }, []);
 
+  const header_title = affirmations.getCurrentAffirmation()
+    || 'Say what I want to say, whatever happens will help me grow';
+
   return (
 
     <div className="bg-white w-screen h-screen">
       <div className="flex w-full justify-between">
 
-          <Header />
+          <Header
+            title={header_title}
+          />
 
       </div>
 

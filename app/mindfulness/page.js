@@ -7,6 +7,8 @@ import Modal from 'react-modal';
 import {affirmations} from '../state';
 
 function Home() {
+  const [affirmation, setAffirmation] = useState(affirmations.getCurrentAffirmation()
+    || 'Say what I want to say, whatever happens will help me grow');
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentEditId, setCurrentEditId] = useState(null);
   const [editText, setEditText] = useState('');
@@ -62,15 +64,15 @@ function Home() {
     setCurrentEditId(newId);
   };
 
-  const setAffirmation = (text) => {
+  const saveAffirmation = (text) => {
+    setAffirmation(text);
     affirmations.setCurrentAffirmation(text);
-    window.location.reload();
   };
 
   return (
     <div className="bg-white w-screen h-screen">
       <div className="flex w-full justify-between">
-        <Header />
+        <Header title={affirmation} />
       </div>
 
      <div style = {{marginLeft: '20px', marginRight: '20px'}}>
@@ -93,7 +95,7 @@ function Home() {
         <div key={button.id} className="dropdown">
           <button className="dots-button"> {button.text}</button>
           <div className="dropdown-content">
-            <button style={{ border: '0.5px solid black' }} onClick={() => setAffirmation(button.text)}>Apply</button>
+            <button style={{ border: '0.5px solid black' }} onClick={() => saveAffirmation(button.text)}>Apply</button>
             <button style={{ border: '0.5px solid black' }} onClick={() => openModal(button)}>Edit</button>
             <button style={{ border: '0.5px solid black' }} onClick={() => deleteButton(button.id)}>Delete</button>
           </div>

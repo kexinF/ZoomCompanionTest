@@ -2,10 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import { affirmations, hands } from './state';
 
-const Header = () => {
+const Header = ({title}) => {
 
-  const header_title = affirmations.getCurrentAffirmation()
-    || 'Say what I want to say, whatever happens will help me grow';
+  const header_title = title;
 
   const initialWaveHands = [
     '👋',
