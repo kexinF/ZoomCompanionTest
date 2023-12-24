@@ -10,7 +10,7 @@ import Footer from '../footer';
 import { affirmations, hands } from '../state';
 
 
-export default function Home() {
+export default function Page() {
   async function configureSdk() {
     try {
       const configResponse = await zoomSdk.config({
@@ -21,14 +21,12 @@ export default function Home() {
         version: "0.16.0",
       });
       const userContext = await zoomSdk.invoke("getUserContext");
-    } catch (error) {
-      console.log('zoom sdk not loaded')
+    } catch (e) {
+      console.log('zoom sdk not loaded: ' + e)
     }
   }
 
-  useEffect(() => {
-    configureSdk();
-  }, []);
+  configureSdk();
 
   const header_title = affirmations.getCurrentAffirmation()
     || 'Say what I want to say, whatever happens will help me grow';
@@ -51,4 +49,4 @@ export default function Home() {
     </div>
 
   );
-}
+};
