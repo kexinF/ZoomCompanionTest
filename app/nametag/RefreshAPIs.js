@@ -13,6 +13,32 @@ function RefreshAPIs({ imageData }) {
     }, 200);
   }, []);
 
+  async function configureSdk() {
+    try {
+      const configResponse = await zoomSdk.config({
+        capabilities: [
+          "setVirtualForeground",
+          "removeVirtualForeground"
+
+        ],
+        version: "0.16.0",
+      });
+      console.log("App configured", configResponse);
+      setRunningContext(configResponse.runningContext);
+
+      setUserContextStatus(configResponse.auth.status);
+
+      const userContext = await zoomSdk.invoke("getUserContext");
+      setUser(userContext);
+    } catch (error) {
+      console.log('zoom sdk not loaded')
+    }
+  }
+
+  useEffect(() => {
+    configureSdk();
+  }, []);
+
 
   useEffect(() => {
     if (!isDisabled) {

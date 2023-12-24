@@ -5,9 +5,9 @@ import { createContext, useEffect, useState } from "react";
 import React from 'react';
 import zoomSdk from "@zoom/appssdk";
 import NameTag from "./nametag"
-import Header from './header';
-import Footer from './footer';
-import { affirmations, hands } from './state';
+import Header from '../header';
+import Footer from '../footer';
+import { affirmations, hands } from '../state';
 
 
 export default function Home() {

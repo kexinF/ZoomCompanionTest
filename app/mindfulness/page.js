@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../header';
 import Footer from '../footer';
-import NameTag from '../nametag';
+import NameTag from '../nametag/nametag';
 import Modal from 'react-modal';
 import {affirmations} from '../state';
 
