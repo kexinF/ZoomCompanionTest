@@ -29,5 +29,38 @@ export namespace hands {
   export function setHandChoicesAsString(hands: string) {
     localStorage.setItem('waveHands', hands);
   }
+}
+
+
+export namespace nametags {
+
+  export function getCurrentNametag(): string[] {
+    const inputValues: string[] = [];
+    for (let index = 0; index < 4; index++) {
+        const key = `inputValue${index}`;
+        const value = localStorage.getItem(key);
+        if (value !== null) {
+            inputValues.push(value);
+        } else {
+          inputValues.push('')
+        }
+    }
+    return inputValues;
+}
+
+  export function setCurrentNametag(inputValues: string[]) {
+    inputValues.forEach((value, index) => {
+        const key = `inputValue${index}`;
+        localStorage.setItem(key, value);
+    });
+}
+
+  export function getNametagStatus(): string|null {
+    localStorage.getItem('showNametag');
+  }
+  export function setNametagStatus(showNametag: string) {
+    localStorage.setItem('showNametag', showNametag);
+  }
+
 
 }

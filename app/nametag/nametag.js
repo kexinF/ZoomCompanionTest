@@ -3,7 +3,7 @@ import RefreshAPIs from './RefreshAPIs';
 import zoomSdk from "@zoom/appssdk";
 import Switch from '@mui/material/Switch';
 import { alpha, styled } from '@mui/material/styles';
-import { hands } from '../state';
+import { hands, nametags } from '../state';
 
 function drawNametag() {
 
@@ -33,8 +33,8 @@ function drawNametag() {
     context.font = '40px Arial';
     context.fillStyle = 'black';
 
-    const localStorageData = localStorage.getItem('inputValues');
-    const inputValues = localStorageData ? JSON.parse(localStorageData).map(value => decodeURIComponent(value)) : ['', '', '', ''];
+    const inputValues = nametags.getCurrentNametag()
+   
 
     if (inputValues[1] != '') {
       context.fillText(inputValues[0] + ' (' + inputValues[1] + ')', 800 , 600 + 0 * 50);
@@ -77,30 +77,22 @@ function drawNametag() {
 
 
 const NameTag = () => {
-  const [inputValues, setInputValues] = useState(['', '', '', '']);
+  const [inputValues, setInputValues] = useState(nametags.getCurrentNametag());
   const [showNametag, setShowNametag] = useState(false);
-  const [showHands, setShowHands] = useState(hands.getCurrentHand());
   const [imageData, setImageData] = useState(null);
-  const [selectedPronoun, setSelectedPronoun] = useState('');
 
-  useEffect(() => {
-    const handleStorageChange = () => {
-      setShowHands(hands.getCurrentHand());
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
-  }, []);
 
   useEffect(() => {
 
-    localStorage.setItem('showNametag', JSON.stringify(showNametag));
+    // localStorage.setItem('showNametag', JSON.stringify(showNametag));
+    nametags.setNametagStatus(JSON.stringify(showNametag))
+
+
+    // const encodedData = inputValues.map(value => encodeURIComponent(value));
+    nametags.setCurrentNametag(inputValues)
+
     const newImageData = drawNametag();
     setImageData(newImageData);
-
 
   }, [showNametag, inputValues]);
 
@@ -114,7 +106,6 @@ const NameTag = () => {
     const newInputValues = [...inputValues];
     newInputValues[index] = value;
     setInputValues(newInputValues);
-    console.log(inputValues)
   }
 
   const blockStyle = {
@@ -167,15 +158,15 @@ const NameTag = () => {
         <div>
           <label>Select Pronouns</label>
           <select
-            value={selectedPronoun}
+            value={inputValues[2]}
             onChange={(e) => handleInputChange(2, e.target.value)}
             className="border border-gray-300 rounded-lg p-2 w-1/3"
           >
             <option value="">Select Pronouns</option>
-            <option value="he/him">He/Him</option>
-            <option value="she/her">She/Her</option>
-            <option value="they/them">They/Them</option>
-            <option value="other">Other</option>
+            <option value="He/Him">He/Him</option>
+            <option value="She/Her">She/Her</option>
+            <option value="They/Them">They/Them</option>
+            <option value="Other">Other</option>
           </select>
         </div>
         <div style={blockStyle}></div>

@@ -20,7 +20,6 @@ export default function Home() {
         ],
         version: "0.16.0",
       });
-      console.log("App configured", configResponse);
       const userContext = await zoomSdk.invoke("getUserContext");
     } catch (error) {
       console.log('zoom sdk not loaded')

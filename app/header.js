@@ -16,9 +16,7 @@ const Header = ({title}) => {
         ],
         version: "0.16.0",
       });
-      console.log("App configured", configResponse);
       setRunningContext(configResponse.runningContext);
-
       setUserContextStatus(configResponse.auth.status);
 
       const userContext = await zoomSdk.invoke("getUserContext");

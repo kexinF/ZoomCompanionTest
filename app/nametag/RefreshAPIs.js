@@ -23,7 +23,6 @@ function RefreshAPIs({ imageData }) {
         ],
         version: "0.16.0",
       });
-      console.log("App configured", configResponse);
       setRunningContext(configResponse.runningContext);
 
       setUserContextStatus(configResponse.auth.status);
