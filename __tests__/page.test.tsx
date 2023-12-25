@@ -2,7 +2,7 @@ import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import Page from '../app/page'
 
-// Page.configureSdk = async () => {};
+jest.mock('next/navigation', () => jest.requireActual('next-router-mock'))
 
 describe('Page', () => {
   it('renders a heading', () => {

@@ -35,20 +35,20 @@ const Login = () => {
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-lg">
-                <h2 className="text-2xl font-semibold mb-6">Login</h2>
+                <h1 className="text-2xl font-semibold mb-6">Login</h1>
                 <form onSubmit={handleSubmit}>
                     {error ? <Alert value={error} /> : null}
                     <div className="mb-4">
-                        <label htmlFor="email" className="block text-gray-700">
-                            Email
-                        </label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={userInfo.email}
-                            onChange={handleChange}
-                            className="w-full mt-2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+                      <label htmlFor="email" className="block text-gray-700">
+                          Email
+                      </label>
+                      <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          value={userInfo.email}
+                          onChange={handleChange}
+                          className="w-full mt-2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
                             required
                         />
                     </div>
