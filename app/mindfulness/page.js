@@ -85,8 +85,8 @@ function Home() {
           viewBox="0 0 100 100"
         >
           <circle cx="50" cy="50" r="48" fill="#f7f3f3" stroke="none" />
-          <line x1="30" y1="50" x2="70" y2="50" stroke="#d68071" stroke-width="8" /> 
-          <line x1="50" y1="30" x2="50" y2="70" stroke="#d68071" stroke-width="8" />
+          <line x1="30" y1="50" x2="70" y2="50" stroke="#d68071" strokeWidth="8" /> 
+          <line x1="50" y1="30" x2="50" y2="70" stroke="#d68071" strokeWidth="8" />
         </svg>
       </button>
     </div>
