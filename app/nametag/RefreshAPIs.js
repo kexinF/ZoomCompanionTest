@@ -50,7 +50,7 @@ function RefreshAPIs({ imageData }) {
         zoomAppsSdkApi();
       }
     }
-  }, [imageData]);
+  }, [imageData, isDisabled]);
 
 
   return (

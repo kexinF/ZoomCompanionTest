@@ -7,7 +7,7 @@ export namespace affirmations {
   }
 
   export function getAffirmationsAsString(): string|null {
-    localStorage.getItem('buttons');
+    return localStorage.getItem('buttons');
   }
   export function setAffirmationsAsString(affirmations: string) {
     localStorage.setItem('buttons', affirmations);
@@ -24,7 +24,7 @@ export namespace hands {
   }
 
   export function getHandChoicesAsString(): string|null {
-    localStorage.getItem('waveHands');
+    return localStorage.getItem('waveHands');
   }
   export function setHandChoicesAsString(hands: string) {
     localStorage.setItem('waveHands', hands);
@@ -56,7 +56,7 @@ export namespace nametags {
 }
 
   export function getNametagStatus(): string|null {
-    localStorage.getItem('showNametag');
+    return localStorage.getItem('showNametag');
   }
   export function setNametagStatus(showNametag: string) {
     localStorage.setItem('showNametag', showNametag);
