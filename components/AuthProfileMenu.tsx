@@ -9,7 +9,7 @@ const buttonStyle =
     "block bg-white shadow-md shadow-gray-500 text-xl font-bold py-2 px-4 rounded-full hover:bg-slate-400";
 
 export default function AuthProfileMenu() {
-    const { data, status } = useSession();
+    const { status } = useSession();
     const isAuth = status === "authenticated";
 
     if (isAuth) {

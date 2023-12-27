@@ -22,7 +22,7 @@ const SignUp = () => {
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
         setBusy(true);
         e.preventDefault();
-        const res = await fetch("/api/auth/users", { 
+        await fetch("/api/auth/users", { 
             method: "POST",
             body: JSON.stringify(userInfo),
             }).then((res) => res.json());
