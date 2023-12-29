@@ -4,13 +4,13 @@ import { redirect } from "next/navigation";
 import { createContext, useEffect, useState } from "react";
 import React from 'react';
 import zoomSdk from "@zoom/appssdk";
-import NameTag from "./nametag"
+import NameTag from "./nametag";
 import Header from '../header';
 import Footer from '../footer';
 import { affirmations, hands } from '../state';
 
 
-export default function Page() {
+const Page: React.FC = () => {
   async function configureSdk() {
     try {
       const configResponse = await zoomSdk.config({
@@ -22,31 +22,23 @@ export default function Page() {
       });
       const userContext = await zoomSdk.invoke("getUserContext");
     } catch (e) {
-      console.log('zoom sdk not loaded: ' + e)
+      console.log('zoom sdk not loaded: ' + e);
     }
   }
 
   configureSdk();
 
-  const header_title = affirmations.getCurrentAffirmation()
-    || 'Say what I want to say, whatever happens will help me grow';
-
   return (
-
     <div className="bg-white w-screen h-screen">
       <div className="flex w-full justify-between">
-
-          <Header
-            title={header_title}
-          />
-
+        <Header />
       </div>
 
       <NameTag />
-      
-    <Footer />
 
+      <Footer />
     </div>
-
   );
 };
+
+export default Page;

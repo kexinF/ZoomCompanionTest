@@ -1,3 +1,4 @@
+
 const fakeLocalStorage = {
   getItem(x:unknown) {
     return null;
@@ -10,9 +11,11 @@ const USE_LOCAL_STORAGE_IF_PRESENT = true;
 const localStorage = (USE_LOCAL_STORAGE_IF_PRESENT && globalThis.localStorage) || fakeLocalStorage;
 
 export namespace affirmations {
-  export function getCurrentAffirmation(): string|null {
-    return localStorage.getItem('title');
+
+  export function getCurrentAffirmation(): string {
+    return localStorage.getItem('title') ?? "test";
   }
+
   export function setCurrentAffirmation(text: string) {
     localStorage.setItem('title', text);
   }

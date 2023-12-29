@@ -1,16 +1,18 @@
-// RefreshAPIs.js
-
 import React, { useEffect, useState } from "react";
 import zoomSdk from "@zoom/appssdk";
 
-function RefreshAPIs({ imageData }) {
+interface RefreshAPIsProps {
+  imageData: string; 
+}
+
+const RefreshAPIs: React.FC<RefreshAPIsProps> = ({ imageData }) => {
   const [isDisabled, setIsDisabled] = useState(true);
 
   useEffect(() => {
     // Disable the code for 0.1 seconds
     setTimeout(() => {
       setIsDisabled(false);
-    }, 200);
+    }, 100);
   }, []);
 
   async function configureSdk() {
@@ -19,18 +21,16 @@ function RefreshAPIs({ imageData }) {
         capabilities: [
           "setVirtualForeground",
           "removeVirtualForeground"
-
         ],
         version: "0.16.0",
       });
       setRunningContext(configResponse.runningContext);
-
       setUserContextStatus(configResponse.auth.status);
 
       const userContext = await zoomSdk.invoke("getUserContext");
       setUser(userContext);
     } catch (error) {
-      console.log('zoom sdk not loaded')
+      console.log('zoom sdk not loaded');
     }
   }
 
@@ -38,28 +38,25 @@ function RefreshAPIs({ imageData }) {
     configureSdk();
   }, []);
 
-
   useEffect(() => {
     if (!isDisabled) {
-        if (imageData) {
-          // console.log('APIs refreshed with imageData:', imageData); 
-          const zoomAppsSdkApi = zoomSdk["setVirtualForeground"].bind(zoomSdk);
-          zoomAppsSdkApi({ imageData: imageData });
-      } else { 
+      if (imageData) {
+        const zoomAppsSdkApi = zoomSdk["setVirtualForeground"].bind(zoomSdk);
+        zoomAppsSdkApi({ imageData: imageData });
+      } else {
         const zoomAppsSdkApi = zoomSdk["removeVirtualForeground"].bind(zoomSdk);
         zoomAppsSdkApi();
       }
     }
   }, [imageData, isDisabled]);
 
-
   return (
     <label className="flex items-center cursor-pointer">
       <div>
-        
+        {/* Add content inside the label if needed */}
       </div>
     </label>
   );
-}
+};
 
 export default RefreshAPIs;
