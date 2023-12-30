@@ -1,4 +1,4 @@
-import ZoomApiWrapper from './zoomapi';
+import {ZoomApiWrapper} from './zoomapi';
 
 class FakeZoomApi implements ZoomApiWrapper {
   async setVirtualForeground() {}
