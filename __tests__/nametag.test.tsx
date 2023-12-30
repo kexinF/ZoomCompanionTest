@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react'
 import Page from '../app/nametag/page'
 
 jest.mock('next/navigation', () => jest.requireActual('next-router-mock'))
+jest.mock('../lib/zoomapi', () => jest.requireActual('../lib/fakezoomapi'));
 
 describe('Page', () => {
   it('renders a heading', () => {
