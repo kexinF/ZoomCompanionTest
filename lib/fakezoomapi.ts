@@ -1,10 +1,10 @@
 import {ZoomApiWrapper} from './zoomapi';
 
 class FakeZoomApi implements ZoomApiWrapper {
-  async setVirtualForeground() {}
-  async removeVirtualForeground() {}
+  async setVirtualForeground(): Promise<any> {}
+  async removeVirtualForeground(): Promise<any> {}
 }
-export {ZoomApiWrapper};
+export type {ZoomApiWrapper};
 
 export function createFromConfig() {
   return new FakeZoomApi();
