@@ -1,54 +1,40 @@
-import React, { useEffect, useState } from "react";
-import zoomSdk from "@zoom/appssdk";
+import React, { useEffect } from "react";
+import { createFromConfig, ZoomApiWrapper } from "@/lib/zoomapi";
+import { ConfigOptions }  from "@zoom/appssdk";
+
+
+type Apis = "setVirtualForeground" | "removeVirtualForeground"
+const apiList: Apis[] = [
+  "setVirtualForeground",
+  "removeVirtualForeground",
+];
 
 interface RefreshAPIsProps {
-  imageData: string; 
+  imageData: ImageData | null; 
 }
 
 const RefreshAPIs: React.FC<RefreshAPIsProps> = ({ imageData }) => {
-  const [isDisabled, setIsDisabled] = useState(true);
 
-  useEffect(() => {
-    // Disable the code for 0.1 seconds
-    setTimeout(() => {
-      setIsDisabled(false);
-    }, 100);
-  }, []);
-
-  async function configureSdk() {
-    try {
-      const configResponse = await zoomSdk.config({
-        capabilities: [
-          "setVirtualForeground",
-          "removeVirtualForeground"
-        ],
-        version: "0.16.0",
-      });
-      setRunningContext(configResponse.runningContext);
-      setUserContextStatus(configResponse.auth.status);
-
-      const userContext = await zoomSdk.invoke("getUserContext");
-      setUser(userContext);
-    } catch (error) {
-      console.log('zoom sdk not loaded');
-    }
+  // const configOptions = {
+  //       capabilities: [
+  //         "setVirtualForeground",
+  //         "removeVirtualForeground"
+  //       ],
+  //     };
+  const configOptions: ConfigOptions = {
+    capabilities: apiList
   }
+  const zoomApiInstance: ZoomApiWrapper = createFromConfig(configOptions);
 
   useEffect(() => {
-    configureSdk();
-  }, []);
-
-  useEffect(() => {
-    if (!isDisabled) {
-      if (imageData) {
-        const zoomAppsSdkApi = zoomSdk["setVirtualForeground"].bind(zoomSdk);
-        zoomAppsSdkApi({ imageData: imageData });
-      } else {
-        const zoomAppsSdkApi = zoomSdk["removeVirtualForeground"].bind(zoomSdk);
-        zoomAppsSdkApi();
-      }
+    if (imageData) {
+      const setForegroundResponse = zoomApiInstance.setVirtualForeground(imageData);
+      console.log('Set Virtual Foreground Response:', setForegroundResponse);
+    } else {
+      const removeForegroundResponse = zoomApiInstance.removeVirtualForegroud();
+      console.log('Remove Virtual Foreground Response:', removeForegroundResponse);
     }
-  }, [imageData, isDisabled]);
+  }, [imageData]);
 
   return (
     <label className="flex items-center cursor-pointer">

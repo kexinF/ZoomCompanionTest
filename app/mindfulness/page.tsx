@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../header';
 import Footer from '../footer';
-import NameTag from '../nametag/nametag';
 import Modal from 'react-modal';
 import { affirmations } from '../state';
 
@@ -12,7 +11,6 @@ interface Button {
 }
 
 function Home() {
-  const [affirmation, setAffirmation] = useState(affirmations.getCurrentAffirmation());
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentEditId, setCurrentEditId] = useState<number | null>(null);
   const [editText, setEditText] = useState('');
@@ -67,7 +65,6 @@ function Home() {
   };
 
   const saveAffirmation = (text: string) => {
-    setAffirmation(text);
     affirmations.setCurrentAffirmation(text);
   };
 

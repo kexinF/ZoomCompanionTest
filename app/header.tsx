@@ -4,30 +4,7 @@ import { drawNametag } from './nametag/nametag';
 import RefreshAPIs from './nametag/RefreshAPIs';
 
 const Header: React.FC = () => {
-  const [runningContext, setRunningContext] = useState<string | null>(null);
-  const [userContextStatus, setUserContextStatus] = useState<string | null>(null);
-  const [user, setUser] = useState<any | null>(null);
-  const [imageData, setImageData] = useState<string | null>(null);
-
-  async function configureSdk() {
-    try {
-      const configResponse = await zoomSdk.config({
-        capabilities: ["setVirtualForeground", "removeVirtualForeground"],
-        version: "0.16.0",
-      });
-      setRunningContext(configResponse.runningContext);
-      setUserContextStatus(configResponse.auth.status);
-
-      const userContext = await zoomSdk.invoke("getUserContext");
-      setUser(userContext);
-    } catch (error) {
-      console.log('zoom sdk not loaded');
-    }
-  }
-
-  useEffect(() => {
-    configureSdk();
-  }, []);
+  const [imageData, setImageData] = useState<ImageData | null>(null);
 
   const header_title = affirmations.getCurrentAffirmation();
 
@@ -40,7 +17,7 @@ const Header: React.FC = () => {
     '👋 Support',
   ];
 
-  const [waveHands, setWaveHands] = useState<string[]>(() => {
+  const [waveHands, _setWaveHands] = useState<string[]>(() => {
     const localStorageData = hands.getHandChoicesAsString();
     return localStorageData ? JSON.parse(localStorageData) : initialWaveHands;
   });

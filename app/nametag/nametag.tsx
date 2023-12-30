@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import RefreshAPIs from './RefreshAPIs';
-import zoomSdk from "@zoom/appssdk";
 import Switch from '@mui/material/Switch';
 import { alpha, styled } from '@mui/material/styles';
-import { hands, nametags } from '../state';
+import { nametags, hands } from '../state';
 
 function drawNametag(): ImageData {
   const canvas = document.createElement('canvas');
-  const context = canvas.getContext('2d');
+  const context = canvas.getContext('2d')!;
   canvas.width = 1600; // Width of the canvas
   canvas.height = 900; // Height of the canvas
   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -45,9 +44,20 @@ function drawNametag(): ImageData {
     context.fillText(inputValues[3], 800, 600 + 2 * 50);
   }
 
-  const waveHandsData = JSON.parse(localStorage.getItem('waveHands'));
-  const indexData = JSON.parse(localStorage.getItem('selectedWaveHand'));
+
+  const indexDataRaw = hands.getCurrentHand();
+  let indexData: any = null; 
+  if (indexDataRaw !== null) {
+    indexData = JSON.parse(indexDataRaw);
+  }
+
   if (indexData !== null) {
+    const waveHandsDataRaw = hands.getHandChoicesAsString();
+    let waveHandsData: any = null; 
+    if (waveHandsDataRaw !== null) {
+      waveHandsData = JSON.parse(waveHandsDataRaw);
+    }
+
     context.font = '50px Arial'; // Font size and style
     context.fillStyle = 'black'; // Text color
 
