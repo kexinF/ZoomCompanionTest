@@ -2,7 +2,7 @@ import zoomSdk, {ConfigOptions, ConfigResponse, GeneralMessageResponse }  from "
 
 export interface ZoomApiWrapper {
   setVirtualForeground(imageData: ImageData): Promise<GeneralMessageResponse>;
-  removeVirtualForegroud(): Promise<GeneralMessageResponse>;
+  removeVirtualForeground(): Promise<GeneralMessageResponse>;
 }
 
 export function createFromConfig(options: ConfigOptions) {
@@ -27,7 +27,7 @@ class ZoomApiImpl implements ZoomApiWrapper {
     return zoomSdk.setVirtualForeground({imageData});
   }
 
-  async removeVirtualForegroud(): Promise<GeneralMessageResponse> {
+  async removeVirtualForeground(): Promise<GeneralMessageResponse> {
     const configResponse = await this.initialize();
     console.log(`Zoom SDK config response: ${configResponse}`);
     return zoomSdk.removeVirtualForeground();
