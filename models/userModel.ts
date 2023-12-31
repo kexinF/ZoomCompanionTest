@@ -9,7 +9,7 @@ interface UserDocument extends Document {
     password: string;
     role: "admin" | "user";
 }
-    
+
 interface Methods {
     comparePassword: (password: string) => Promise<boolean>;
 }

@@ -1,54 +1,55 @@
 
 const fakeLocalStorage = {
-  getItem(x:unknown) {
+  getItem() {
     return null;
   },
-  setItem(x:unknown, y:unknown) {},
+  setItem() {},
 };
 
 const USE_LOCAL_STORAGE_IF_PRESENT = true;
 
 const localStorage = (USE_LOCAL_STORAGE_IF_PRESENT && globalThis.localStorage) || fakeLocalStorage;
 
-export namespace affirmations {
 
-  export function getCurrentAffirmation(): string {
+export const affirmations = {
+  getCurrentAffirmation(): string {
     return localStorage.getItem('title') ?? "test";
-  }
+  },
 
-  export function setCurrentAffirmation(text: string) {
+  setCurrentAffirmation(text: string) {
     localStorage.setItem('title', text);
-  }
+  },
 
-  export function getAffirmationsAsString(): string|null {
+  getAffirmationsAsString(): string|null {
     return localStorage.getItem('buttons');
-  }
-  export function setAffirmationsAsString(affirmations: string) {
+  },
+
+  setAffirmationsAsString(affirmations: string) {
     localStorage.setItem('buttons', affirmations);
-  }
-}
+  },
+};
 
-export namespace hands {
-
-  export function getCurrentHand(): string|null {
+export const hands = {
+  getCurrentHand(): string|null {
     return localStorage.getItem('selectedWaveHand');
-  }
-  export function setCurrentHand(text: string) {
+  },
+
+  setCurrentHand(text: string) {
     localStorage.setItem('selectedWaveHand', text);
-  }
+  },
 
-  export function getHandChoicesAsString(): string|null {
+  getHandChoicesAsString(): string|null {
     return localStorage.getItem('waveHands');
-  }
-  export function setHandChoicesAsString(hands: string) {
+  },
+
+  setHandChoicesAsString(hands: string) {
     localStorage.setItem('waveHands', hands);
-  }
-}
+  },
+};
 
 
-export namespace nametags {
-
-  export function getCurrentNametag(): string[] {
+export const nametags = {
+  getCurrentNametag(): string[] {
     const inputValues: string[] = [];
     for (let index = 0; index < 4; index++) {
         const key = `inputValue${index}`;
@@ -60,21 +61,20 @@ export namespace nametags {
         }
     }
     return inputValues;
-}
+  },
 
-  export function setCurrentNametag(inputValues: string[]) {
+  setCurrentNametag(inputValues: string[]) {
     inputValues.forEach((value, index) => {
         const key = `inputValue${index}`;
         localStorage.setItem(key, value);
     });
-}
+  },
 
-  export function getNametagStatus(): string|null {
+  getNametagStatus(): string|null {
     return localStorage.getItem('showNametag');
-  }
-  export function setNametagStatus(showNametag: string) {
+  },
+
+  setNametagStatus(showNametag: string) {
     localStorage.setItem('showNametag', showNametag);
-  }
-
-
-}
+  },
+};

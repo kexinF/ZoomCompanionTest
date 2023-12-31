@@ -1,8 +1,9 @@
-import {ZoomApiWrapper} from './zoomapi';
+import { ZoomApiWrapper } from './zoomapi';
+import { GeneralMessageResponse }  from "@zoom/appssdk";
 
 class FakeZoomApi implements ZoomApiWrapper {
-  async setVirtualForeground(): Promise<any> {}
-  async removeVirtualForeground(): Promise<any> {}
+  async setVirtualForeground(): Promise<GeneralMessageResponse> { return {} as GeneralMessageResponse; }
+  async removeVirtualForeground(): Promise<GeneralMessageResponse> { return {} as GeneralMessageResponse; }
 }
 export type {ZoomApiWrapper};
 

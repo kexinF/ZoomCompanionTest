@@ -46,17 +46,11 @@ function drawNametag(): ImageData {
 
 
   const indexDataRaw = hands.getCurrentHand();
-  let indexData: any = null; 
-  if (indexDataRaw !== null) {
-    indexData = JSON.parse(indexDataRaw);
-  }
+  const indexData = (indexDataRaw !== null) ? JSON.parse(indexDataRaw) : null;
 
   if (indexData !== null) {
     const waveHandsDataRaw = hands.getHandChoicesAsString();
-    let waveHandsData: any = null; 
-    if (waveHandsDataRaw !== null) {
-      waveHandsData = JSON.parse(waveHandsDataRaw);
-    }
+    const waveHandsData = (waveHandsDataRaw !== null) ? JSON.parse(waveHandsDataRaw) : null;
 
     context.font = '50px Arial'; // Font size and style
     context.fillStyle = 'black'; // Text color

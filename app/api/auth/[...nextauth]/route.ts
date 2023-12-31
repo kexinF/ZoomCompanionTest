@@ -4,6 +4,14 @@ import UserModel from "@/models/userModel";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
+import { DefaultUser } from 'next-auth';
+declare module 'next-auth' {
+    interface User extends DefaultUser {
+        role: string;
+    }
+}
+
+
 // Create a jwt session and verify user credentials
 const authOptions: NextAuthOptions = {
     session: {
@@ -36,13 +44,13 @@ const authOptions: NextAuthOptions = {
         }),
     ],
     callbacks: {
-        jwt(params: any) {
-            if (params.user?.role) {
-                params.token.role = params.user.role;
-                params.token.id = params.user.id;
+        jwt({ user, token }) {
+            if (user?.role) {
+                token.role = user.role;
+                token.id = user.id;
             }
             // reutrn final_token
-            return params.token;
+            return token;
         },
         session({ session, token }) {
             if (session.user) {
