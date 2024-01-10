@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { affirmations, hands } from './state';
 import { drawNametag } from './nametag/nametag';
 import RefreshAPIs from './nametag/RefreshAPIs';
+import { WaveHandButton } from '@/components/WaveHandButton';
 
 const Header: React.FC = () => {
   const [imageData, setImageData] = useState<ImageData | null>(null);
@@ -53,13 +54,12 @@ const Header: React.FC = () => {
 
       <div className="button-rows">
         {waveHands.map((waveHand, index) => (
-          <button
+          <WaveHandButton
             key={index}
-            className={`wave-hand-button ${selectedWaveHand === index ? 'selected' : ''}`}
+            selected={selectedWaveHand === index}
             onClick={() => handleWaveHandsClick(index)}
-          >
-            {waveHand}
-          </button>
+            text={waveHand}
+          />
         ))}
       </div>
 
