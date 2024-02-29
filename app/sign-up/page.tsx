@@ -31,18 +31,16 @@ const SignUp = () => {
     };
 
 return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <div className="max-w-md w-full p-6 bg-[#35377D] rounded-lg shadow-lg">
-                <h2 className="text-2xl font-semibold mb-6 text-white">Sign Up</h2>
+        <div className="flex items-center justify-center min-h-screen bg-white">
+            <div className="max-w-md w-full p-6">
+                <h2 className="text-2xl font-semibold mb-6 text-center">Create an account</h2>
                 {isUserCreated && (
                     <Alert value="User created successfully!"  />
                 )}
                 <form className="space-y-4" onSubmit={handleSubmit}>
                     <div>
-                        <label htmlFor="name" className="block text-white">
-                            Name
-                        </label>
                         <input
+                            placeholder="Username"
                             type="text"
                             id="name"
                             name="name"
@@ -53,10 +51,8 @@ return (
                         />
                     </div>
                     <div>
-                        <label htmlFor="email" className="block text-white">
-                            Email
-                        </label>
                         <input
+                            placeholder="Email"
                             type="email"
                             id="email"
                             name="email"
@@ -67,10 +63,8 @@ return (
                         />
                     </div>
                     <div>
-                        <label htmlFor="password" className="block text-white">
-                            Password
-                        </label>
                         <input
+                            placeholder="Password"
                             type="password"
                             id="password"
                             name="password"
@@ -80,14 +74,23 @@ return (
                             required
                         />
                     </div>
-                    <button
-                        className="w-full bg-yellow-500 text-black px-4 py-2 rounded-md font-bold hover:bg-blue-600 transition-colors"
-                        type="submit"
-                        disabled={busy}
-                        style={{ opacity: busy ? 0.5 : 1 }}
-                    >
-                        Sign Up
-                    </button>
+                    <div className="flex justify-center items-center mt-8">
+                        <button
+                            className="w-full text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+                            type="submit"
+                            disabled={busy}
+                            style={{ opacity: busy ? 0.5 : 1 , maxWidth: '100px', backgroundColor: '#d68071'}}
+                        >
+                            Sign Up
+                        </button>
+                    </div>
+
+                    <p className="mt-8 text-center text-gray-500">
+                    Already have an account,{" "}
+                    <a href="/" className="text-blue-500 underline" style={{ color: '#d68071' }}>
+                        sign in.
+                    </a>
+                </p>
                 </form>
             </div>
         </div>

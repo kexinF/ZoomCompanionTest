@@ -1,36 +1,36 @@
+// Under Review
+
 "use client";
 import React, { useState, useEffect } from 'react';
-import Header from '../header';
-import Footer from '../footer';
 import Modal from 'react-modal';
-import { affirmations } from '../state';
 
 interface Button {
   id: number;
   text: string;
 }
 
-function Home() {
+interface AffirmationProps {
+  allAffirmations: Button[];
+  setCurrentAffirmation: (buttons: string) => void;
+  setAllAffirmations: (text: Button[]) => void;
+}
+
+
+function Affirmation({
+  allAffirmations,
+  setCurrentAffirmation,
+  setAllAffirmations,
+}: AffirmationProps) {
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentEditId, setCurrentEditId] = useState<number | null>(null);
   const [editText, setEditText] = useState('');
-  const initialButtons: Button[] = [
-    { id: 1, text: 'Say what I want to say, whatever happens will help me grow' },
-    { id: 2, text: 'I can take up space' },
-    { id: 3, text: 'I have an important voice' },
-    { id: 4, text: 'Feel the tension and proceed' },
-    { id: 5, text: 'I have the right to stutter' },
-  ];
 
-  // Initialize state with saved data if it exists, otherwise use the initial data.
-  const [buttons, setButtons] = useState<Button[]>(() => {
-    const stringifiedAffirmations = affirmations.getAffirmationsAsString();
-    return stringifiedAffirmations ? JSON.parse(stringifiedAffirmations) : initialButtons;
-  });
+  const [buttons, setButtons] = useState(allAffirmations)
 
   useEffect(() => {
-    affirmations.setAffirmationsAsString(JSON.stringify(buttons));
-  }, [buttons]);
+    setAllAffirmations(buttons);
+  }, [buttons, setAllAffirmations]);
 
   const openModal = (button: Button) => {
     setModalIsOpen(true);
@@ -44,11 +44,14 @@ function Home() {
 
   const handleEdit = () => {
     setButtons((prevButtons) =>
-      prevButtons.map((button) =>
-        button.id === currentEditId ? { ...button, text: editText } : button
-      )
+      prevButtons.map((button) => {
+        if (button.id === currentEditId) {
+          return { ...button, text: editText };
+        } else {
+          return button;
+        }
+      })
     );
-    console.log(buttons);
     closeModal();
   };
 
@@ -64,23 +67,27 @@ function Home() {
     setCurrentEditId(newId);
   };
 
-  const saveAffirmation = (text: string) => {
-    affirmations.setCurrentAffirmation(text);
-  };
 
   return (
-    <div className="bg-white w-screen h-screen">
-      <div className="flex w-full justify-between">
-        <Header />
-      </div>
 
-      <div style={{ marginLeft: '20px', marginRight: '20px' }}>
-        <h2 style={{ fontSize: '30px', fontWeight: 'bold', display: 'inline-block' }}>Affirmation</h2>
+    <div className="bg-white w-screen h-screen">
+
+      <div style={{ marginLeft: '20px', marginRight: '20px', alignItems: 'center' }}>
+        <h2 style={{ fontSize: '30px', fontWeight: 'bold', display: 'inline-block', margin: '0' }}>Affirmation</h2>
         <button
-          style={{ border: 'none', display: 'inline-block', fontSize: '24px', padding: '10px' }}
+          style={{
+            border: 'none',
+            display: 'inline-block',
+            fontSize: '24px',
+            padding: '10px',
+            width: '50px', // Set a fixed width, adjust as needed
+            height: '50px', // Set a fixed height, adjust as needed
+            boxSizing: 'border-box', // Include padding in the total width
+          }}
           onClick={addButton}
+          aria-label="New Affirmation"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="10%" height="10%" viewBox="0 0 100 100">
+          <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 100">
             <circle cx="50" cy="50" r="48" fill="#f7f3f3" stroke="none" />
             <line x1="30" y1="50" x2="70" y2="50" stroke="#d68071" strokeWidth="8" />
             <line x1="50" y1="30" x2="50" y2="70" stroke="#d68071" strokeWidth="8" />
@@ -92,7 +99,7 @@ function Home() {
         <div key={button.id} className="dropdown">
           <button className="dots-button"> {button.text}</button>
           <div className="dropdown-content">
-            <button style={{ border: '0.5px solid black' }} onClick={() => saveAffirmation(button.text)}>
+            <button style={{ border: '0.5px solid black' }} onClick={() => setCurrentAffirmation(button.text)}>
               Apply
             </button>
             <button style={{ border: '0.5px solid black' }} onClick={() => openModal(button)}>
@@ -124,10 +131,8 @@ function Home() {
         <button onClick={handleEdit}>Save</button>
         <button onClick={closeModal}>Cancel</button>
       </Modal>
-
-      <Footer />
     </div>
   );
 }
 
-export default Home;
+export default Affirmation;

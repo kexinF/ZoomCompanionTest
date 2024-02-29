@@ -29,20 +29,18 @@ const Login = () => {
         });
 
         if (res?.error) return setError(res.error);
-        router.replace("/affirmation");
+        router.replace("/main");
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-lg">
-                <h1 className="text-2xl font-semibold mb-6">Login</h1>
+        <div className="flex items-center justify-center min-h-screen bg-white">
+            <div className="max-w-md w-full p-6 bg-white rounded-lg">
+                <h1 className="text-2xl font-semibold mb-6 text-center">Welcome Back!</h1>
                 <form onSubmit={handleSubmit}>
                     {error ? <Alert value={error} /> : null}
                     <div className="mb-4">
-                      <label htmlFor="email" className="block text-gray-700">
-                          Email
-                      </label>
                       <input
+                          placeholder="Email"
                           type="email"
                           id="email"
                           name="email"
@@ -53,13 +51,9 @@ const Login = () => {
                         />
                     </div>
                     <div className="mb-4">
-                        <label
-                            htmlFor="password"
-                            className="block text-gray-700"
-                        >
-                            Password
-                        </label>
+                        
                         <input
+                            placeholder="Password"
                             type="password"
                             id="password"
                             name="password"
@@ -69,18 +63,22 @@ const Login = () => {
                             required
                         />
                     </div>
-                    <button
-                        type="submit"
-                        className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
-                    >
-                        Login
-                    </button>
+                    <div className="flex justify-center items-center mt-8">
+                        <button
+                            type="submit"
+                            className="w-full text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+                            style={{ maxWidth: '100px', backgroundColor: '#d68071' }}
+                        >
+                            Sign In
+                        </button>
+                    </div>
                 </form>
-                <p className="mt-4 text-center">
-                    I am new,{" "}
-                    <a href="/sign-up" className="text-blue-500 underline">
-                        sign up only
+                <p className="mt-8 text-center text-gray-500">
+                    Don&rsquo;t have an account,{" "}
+                    <a href="/sign-up" className="text-blue-500 underline" style={{ color: '#d68071' }}>
+                        sign up
                     </a>
+                    {" "}now!
                 </p>
             </div>
         </div>
