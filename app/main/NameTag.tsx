@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import Switch from '@mui/material/Switch';
 import { alpha, styled } from '@mui/material/styles';
-import drawNametag from "@/lib/drawNametag";
+// import drawNametag from "@/lib/drawNametag";
+import drawNametag, { NameTagBadge, HandWaveBadge } from "@/lib/drawNametag";
 import debounce from 'lodash/debounce';
 
 import { createFromConfig, ZoomApiWrapper } from "@/lib/zoomapi";
@@ -40,7 +41,23 @@ function NameTag({
   const debouncedEffect = debounce(() => {
     setNameTagStatus(showNametag);
     setCurrentNameTag(inputValues);
-    const imageData = drawNametag(showNametag, inputValues, selectedWaveHand, waveHands);
+
+    const nametag: NameTagBadge = {
+        visible: showNametag,
+        fullName: inputValues[0],
+        preferredName: inputValues[1],
+        pronouns: inputValues[2],
+        disclosure: inputValues[3],
+    };
+
+    const handWave: HandWaveBadge = {
+        selectedWaveHand: selectedWaveHand,
+        waveHands: waveHands,
+    };
+
+    // const imageData = drawNametag(showNametag, inputValues, selectedWaveHand, waveHands);
+    const imageData = drawNametag(nametag, handWave);
+
     console.log(selectedWaveHand)
     const configOptions: ConfigOptions = {
       capabilities: apiList
