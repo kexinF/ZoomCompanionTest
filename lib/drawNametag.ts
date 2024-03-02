@@ -8,13 +8,12 @@ export interface NameTagBadge {
   disclosure: string;
 }
 export interface HandWaveBadge {
-  selectedWaveHand: number | null;
-  waveHands: string[];
+  visible: boolean;
+  waveText: string | null;
 }
 
 // export default function drawNametag(nameTagStatus:boolean, currentNameTag:string[], selectedWaveHand: number | null, waveHands: string[]): ImageData {
 export default function drawNametag(nametag: NameTagBadge, handWave: HandWaveBadge): ImageData {
-  // console.log('function received:', nameTagStatus, selectedWaveHand)
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d')!;
   canvas.width = 1600; // Width of the canvas
@@ -54,23 +53,21 @@ export default function drawNametag(nametag: NameTagBadge, handWave: HandWaveBad
   }
 
 
-  if (handWave.selectedWaveHand !== null) {
+  if (handWave.visible && handWave.waveText) {
 
     context.font = '50px Arial'; // Font size and style
     context.fillStyle = 'black'; // Text color
 
-    const out = handWave.waveHands[handWave.selectedWaveHand]; // Access the selected value
-
-    const textLength = out.length;
+    const textLength = handWave.waveText.length;
     context.fillStyle = '#d68071'; // Set the background color to white
     context.roundRect(60, 70, textLength * 15 + 80, 100, 30);
     context.fill();
     context.fillStyle = 'white'; // White text color
 
     context.font = 'bold 80px Arial'; // Larger font size
-    context.fillText(out.substring(0, 3), 70, 150); // Draw the first character
+    context.fillText(handWave.waveText.substring(0, 3), 70, 150); // Draw the first character
     context.font = 'bold 30px Arial';
-    context.fillText(out.substring(3), 160, 130);
+    context.fillText(handWave.waveText.substring(3), 160, 130);
 
   }
 

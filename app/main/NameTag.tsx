@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import Switch from '@mui/material/Switch';
 import { alpha, styled } from '@mui/material/styles';
-// import drawNametag from "@/lib/drawNametag";
 import drawNametag, { NameTagBadge, HandWaveBadge } from "@/lib/drawNametag";
 import debounce from 'lodash/debounce';
 
@@ -51,11 +50,10 @@ function NameTag({
     };
 
     const handWave: HandWaveBadge = {
-        selectedWaveHand: selectedWaveHand,
-        waveHands: waveHands,
+        visible: selectedWaveHand !== null ? true : false,
+        waveText: selectedWaveHand !== null ? waveHands[selectedWaveHand] : null,
     };
 
-    // const imageData = drawNametag(showNametag, inputValues, selectedWaveHand, waveHands);
     const imageData = drawNametag(nametag, handWave);
 
     console.log(selectedWaveHand)

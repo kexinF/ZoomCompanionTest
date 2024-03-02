@@ -8,7 +8,6 @@ import Mindfulness from "./Mindfulness";
 import Affirmation from "./Affirmation";
 import NameTag from "./NameTag";
 import { useCustomState } from './state';
-// import drawNametag from "@/lib/drawNametag";
 import drawNametag, { NameTagBadge, HandWaveBadge } from "@/lib/drawNametag";
 
 import { createFromConfig, ZoomApiWrapper } from "@/lib/zoomapi";
@@ -43,12 +42,11 @@ function App() {
     };
 
     const handWave: HandWaveBadge = {
-        selectedWaveHand: num,
-        waveHands: state.waveHands,
+        visible: state.selectedWaveHand !== null ? true : false,
+        waveText: state.selectedWaveHand !== null ? state.waveHands[state.selectedWaveHand] : null,
     };
     const imageData = drawNametag(nametag, handWave);
     
-    // const imageData = drawNametag(state.nameTagStatus, state.currentNameTag, num, state.waveHands);
     console.log(state.selectedWaveHand)
     const configOptions: ConfigOptions = {
       capabilities: apiList
