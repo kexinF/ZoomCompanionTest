@@ -49,10 +49,10 @@ function NameTag({
         disclosure: inputValues[3],
     };
 
-    const handWave: HandWaveBadge = {
-        visible: selectedWaveHand !== null ? true : false,
-        waveText: selectedWaveHand !== null ? waveHands[selectedWaveHand] : null,
-    };
+    const handWave: HandWaveBadge =
+       selectedWaveHand !== null ?
+           {visible: true, waveText: waveHands[selectedWaveHand]} :
+           {visible: false};
 
     const imageData = drawNametag(nametag, handWave);
 
