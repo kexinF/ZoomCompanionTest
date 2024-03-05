@@ -53,7 +53,7 @@ export default function drawNametag(nametag: NameTagBadge, handWave: HandWaveBad
   }
 
 
-  if (handWave.visible && handWave.waveText) {
+  if (handWave.visible) {
 
     context.font = '50px Arial'; // Font size and style
     context.fillStyle = 'black'; // Text color
