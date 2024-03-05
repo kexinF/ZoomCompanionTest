@@ -7,10 +7,14 @@ export interface NameTagBadge {
   pronouns: string;
   disclosure: string;
 }
-export interface HandWaveBadge {
-  visible: boolean;
-  waveText: string | null;
+interface DisabledBadge {
+  visible: false
 }
+interface EnabledHandWaveBadge {
+  visible: true;
+  waveText: string;
+}
+export type HandWaveBadge = DisabledBadge | EnabledHandWaveBadge;
 
 // export default function drawNametag(nameTagStatus:boolean, currentNameTag:string[], selectedWaveHand: number | null, waveHands: string[]): ImageData {
 export default function drawNametag(nametag: NameTagBadge, handWave: HandWaveBadge): ImageData {
