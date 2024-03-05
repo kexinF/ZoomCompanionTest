@@ -41,10 +41,10 @@ function App() {
         disclosure: state.currentNameTag[3],
     };
 
-    const handWave: HandWaveBadge = {
-        visible: state.selectedWaveHand !== null ? true : false,
-        waveText: state.selectedWaveHand !== null ? state.waveHands[state.selectedWaveHand] : null,
-    };
+    const handWave: HandWaveBadge =
+       state.selectedWaveHand !== null ?
+           {visible: true, waveText: state.waveHands[state.selectedWaveHand]} :
+           {visible: false};
     const imageData = drawNametag(nametag, handWave);
     
     console.log(state.selectedWaveHand)

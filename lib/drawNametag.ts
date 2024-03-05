@@ -16,7 +16,6 @@ interface EnabledHandWaveBadge {
 }
 export type HandWaveBadge = DisabledBadge | EnabledHandWaveBadge;
 
-// export default function drawNametag(nameTagStatus:boolean, currentNameTag:string[], selectedWaveHand: number | null, waveHands: string[]): ImageData {
 export default function drawNametag(nametag: NameTagBadge, handWave: HandWaveBadge): ImageData {
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d')!;
