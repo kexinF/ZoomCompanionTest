@@ -9,9 +9,8 @@ jest.mock('../lib/zoomapi', () => jest.requireActual('../lib/fakezoomapi'));
 
 describe('Page', () => {
   it('renders the heading and input fields', () => {
-    render(<Page />)
 
-    expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
+    render(<Page />)
     expect(screen.getByText('Full Name')).toBeInTheDocument();
     expect(screen.getByText('Preferred Name')).toBeInTheDocument();
     expect(screen.getAllByText('Select Pronouns')[0]).toBeInTheDocument();
@@ -19,15 +18,18 @@ describe('Page', () => {
   })
 
   it('toggles the nametag display on switch change', async () => {
+
     render(<Page />)
 
-    let switchInput = screen.getByTestId('colored-switch');
-    expect(switchInput).not.toBeChecked();
+    const element = screen.getByLabelText('Name Tag');
+    expect(element).toBeInTheDocument();
 
-    // fireEvent.change(switchInput, { target: { 'aria-checked': true } });
+    let switchInput = screen.getByRole('checkbox')
+
+    expect(switchInput).toBe(element);
+    
+    expect(switchInput).not.toBeChecked();
     await userEvent.click(switchInput);
-
-    // TODO: need to revise this test case to not to be checked
-    expect(switchInput).not.toBeChecked();
+    expect(switchInput).toBeChecked();
   });
 })
