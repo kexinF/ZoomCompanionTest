@@ -1,0 +1,38 @@
+/* NameTag.css */
+.name-tag-container {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.label-text {
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.input-field {
+  margin-top: 0px;
+}
+
+.text-input,
+.select-input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  width: 80%; /* Adjust the width as needed */
+}
+
+.block-style {
+  height: 20px; /* Adjust the height value to control the spacing */
+}
+
+.colored-switch .MuiSwitch-switchBase.Mui-checked {
+  color: #d68071; /* Set the color using a hex value */
+}
+
+.colored-switch .MuiSwitch-switchBase.Mui-checked:hover {
+  background-color: rgba(214, 128, 113, 0.04); /* Set the hover color using a hex value */
+}
+
+.colored-switch .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
+  background-color: #d68071; /* Set the track color using a hex value */
+}
